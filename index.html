@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recibo Luz del Sur — Nº 1772759</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <div class="contenedor">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-logo">
+        <img src="https://www.nicepng.com/png/detail/122-1227541_luz-del-sur-luz-del-sur-logo-png.png" alt="Luz del Sur" />
+      </div>
+      <div class="header-info">
+        <span class="badge">DISTRIBUCIÓN ELÉCTRICA</span>
+        <h1>Reparto de Factura</h1>
+        <p class="suministro-num">Nº Suministro <strong>1772759</strong></p>
+      </div>
+    </header>
+
+    <main class="card-grid">
+
+      <!-- 01: Período -->
+      <section class="card card--full">
+        <div class="card-label">01 — PERÍODO DE FACTURACIÓN</div>
+        <div class="fields-row fields-row--3">
+          <div class="field">
+            <label>Mes / Período</label>
+            <div class="select-periodo">
+              <select id="mes">
+                <option value="">— Mes —</option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+              </select>
+              <select id="anio"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="kwh_total">Energía Total a Facturar (kWh)</label>
+            <input type="text" id="kwh_total" placeholder="0,00" oninput="actualizarDepto2()" onblur="formatearInput(this)" />
+          </div>
+          <div class="field"><!-- espacio --></div>
+        </div>
+      </section>
+
+      <!-- 02: Consumo por dpto -->
+      <section class="card card--full">
+        <div class="card-label">02 — CONSUMO POR DEPARTAMENTO</div>
+        <div class="fields-row fields-row--2">
+          <div class="field dpto-field dpto-a-field">
+            <div class="dpto-badge dpto-badge--a">Dpto 1 — ArqCopy</div>
+            <label for="kwh_a">Energía Consumida (kWh)</label>
+            <input type="text" id="kwh_a" placeholder="0,00" oninput="actualizarDepto2()" onblur="formatearInput(this)" />
+            <div class="kwh-preview" id="preview_a">— kWh</div>
+          </div>
+          <div class="field dpto-field dpto-b-field">
+            <div class="dpto-badge dpto-badge--b">Dpto 2 — Iglesia</div>
+            <label for="kwh_b">Energía Consumida (kWh) — calculado</label>
+            <input type="text" id="kwh_b" placeholder="Automático" readonly />
+            <div class="kwh-preview" id="preview_b">— kWh</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03: Proporcionales -->
+      <section class="card card--full">
+        <div class="card-label">03 — CONCEPTOS PROPORCIONALES AL CONSUMO (kWh)</div>
+        <p class="card-desc">Se reparten según el % de kWh de cada departamento.</p>
+        <div class="fields-row fields-row--3">
+          <div class="field">
+            <label for="consumo_energia">Consumo de Energía (S/)</label>
+            <input type="text" id="consumo_energia" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label>IGV sobre Consumo (S/)</label>
+            <div class="subtotal-box subtotal-box--auto" id="igv_consumo">—</div>
+            <span class="field-hint">Calculado automáticamente: 18% del consumo de energía</span>
+          </div>
+          <div class="field field--subtotal">
+            <label>Subtotal Proporcional (S/)</label>
+            <div class="subtotal-box" id="total_proporcional">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04: Fijos 50/50 -->
+      <section class="card card--full">
+        <div class="card-label">04 — CONCEPTOS FIJOS (50 / 50)</div>
+        <p class="card-desc">Se dividen en partes iguales independientemente del consumo.</p>
+        <div class="fields-row fields-row--3">
+          <div class="field">
+            <label for="cargo_fijo">Cargo Fijo (S/)</label>
+            <input type="text" id="cargo_fijo" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label for="mant_conexion">Mant. y Reposición de Conexión (S/)</label>
+            <input type="text" id="mant_conexion" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label for="alumbrado">Alumbrado Público (S/)</label>
+            <input type="text" id="alumbrado" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label for="interes_comp">Interés Compensatorio (S/)</label>
+            <input type="text" id="interes_comp" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label>IGV sobre Cargos Fijos (S/)</label>
+            <div class="subtotal-box subtotal-box--auto" id="igv_fijos">—</div>
+            <span class="field-hint">Calculado automáticamente: 18% de (Cargo Fijo + Mant. + Alumbrado + Interés Comp.)</span>
+          </div>
+          <div class="field field--subtotal">
+            <label>Subtotal Fijos (S/)</label>
+            <div class="subtotal-box" id="total_fijos">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05: Especiales -->
+      <section class="card card--full">
+        <div class="card-label">05 — CONCEPTOS ESPECIALES (50 / 50)</div>
+        <p class="card-desc">Se dividen en partes iguales independientemente del consumo.</p>
+        <div class="fields-row fields-row--3">
+          <div class="field">
+            <label for="electrif_rural">Electrificación Rural Ley 28749 (S/)</label>
+            <input type="text" id="electrif_rural" placeholder="0,00" onblur="formatearInput(this)" />
+          </div>
+          <div class="field">
+            <label for="ajuste_ant">Ajuste Redondeo Mes Anterior (S/)</label>
+            <input type="text" id="ajuste_ant" placeholder="0,00" onblur="formatearInput(this)" />
+            <span class="field-hint">Puede ser negativo: ej. -0,07</span>
+          </div>
+          <div class="field">
+            <label for="ajuste_act">Ajuste Redondeo Mes Actual (S/)</label>
+            <input type="text" id="ajuste_act" placeholder="0,00" onblur="formatearInput(this)" />
+            <span class="field-hint">Puede ser negativo: ej. -0,08</span>
+          </div>
+          <div class="field field--subtotal">
+            <label>Subtotal Especiales (S/)</label>
+            <div class="subtotal-box" id="total_especiales">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06: Verificación -->
+      <section class="card card--full card--verify">
+        <div class="card-label">06 — VERIFICACIÓN DEL TOTAL</div>
+        <div class="fields-row fields-row--2">
+          <div class="field">
+            <label for="total_recibo">Total del Recibo según Luz del Sur (S/)</label>
+            <input type="text" id="total_recibo" placeholder="0,00" onblur="formatearInput(this)" />
+            <span class="field-hint">Ingresa el TOTAL A PAGAR del recibo oficial</span>
+          </div>
+          <div class="field field--subtotal">
+            <label>Total calculado (S/)</label>
+            <div class="subtotal-box" id="total_calculado">—</div>
+            <div class="diff-msg" id="diff_msg"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Botones -->
+      <div class="acciones card--full">
+        <button class="btn btn-primary" onclick="calcular()">
+          <span class="btn-icon">⚡</span> Calcular Reparto
+        </button>
+        <button class="btn btn-secondary" onclick="window.print()">
+          <span class="btn-icon">🖨️</span> Imprimir / PDF
+        </button>
+      </div>
+
+    </main>
+
+    <!-- RESULTADO -->
+    <section id="resultado" class="resultado" style="display:none;">
+
+      <!-- Solo visible al imprimir -->
+      <div class="print-header">
+        <img src="https://www.nicepng.com/png/detail/122-1227541_luz-del-sur-luz-del-sur-logo-png.png" alt="Luz del Sur" />
+        <div>
+          <div class="print-badge">Distribución Eléctrica</div>
+          <div class="print-title">Reparto de Factura</div>
+          <div class="print-sub">Nº Suministro <strong>1772759</strong></div>
+        </div>
+      </div>
+
+      <div class="resultado-header">
+        <div class="resultado-titulo">Reporte de Distribución</div>
+        <div class="resultado-periodo" id="resumen_periodo"></div>
+      </div>
+
+      <!-- Chips resumen -->
+      <div class="totales-row">
+        <div class="total-chip">
+          <span class="chip-label">Energía total</span>
+          <span class="chip-valor" id="chip_kwh">— kWh</span>
+        </div>
+        <div class="total-chip">
+          <span class="chip-label">Total factura</span>
+          <span class="chip-valor" id="chip_monto">S/ —</span>
+        </div>
+        <div class="total-chip">
+          <span class="chip-label">Cargos proporcionales</span>
+          <span class="chip-valor" id="chip_prop">S/ —</span>
+        </div>
+        <div class="total-chip">
+          <span class="chip-label">Cargos fijos (c/u)</span>
+          <span class="chip-valor" id="chip_fijo">S/ —</span>
+        </div>
+      </div>
+
+      <!-- Tabla detalle por concepto -->
+      <h4 class="subtitulo-tabla">Detalle por concepto</h4>
+      <table class="tabla-detalle">
+        <thead>
+          <tr>
+            <th class="texto-izq">Concepto</th>
+            <th>Criterio</th>
+            <th>Total (S/)</th>
+            <th>Dpto 1 — ArqCopy (S/)</th>
+            <th>Dpto 2 — Iglesia (S/)</th>
+          </tr>
+        </thead>
+        <tbody id="tbody_detalle"></tbody>
+        <tfoot>
+          <tr class="fila-total">
+            <td class="texto-izq" colspan="2"><strong>TOTAL A PAGAR</strong></td>
+            <td id="tfoot_total"></td>
+            <td class="monto" id="tfoot_a"></td>
+            <td class="monto" id="tfoot_b"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- Tabla resumen por dpto -->
+      <h4 class="subtitulo-tabla">Resumen por departamento</h4>
+      <table>
+        <thead>
+          <tr>
+            <th class="texto-izq">Departamento</th>
+            <th>kWh</th>
+            <th>% Consumo</th>
+            <th>Prop. (S/)</th>
+            <th>Fijos (S/)</th>
+            <th>Total a Pagar (S/)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-a">
+            <td class="texto-izq"><span class="dot dot-a"></span>Dpto 1 — ArqCopy</td>
+            <td id="td_kwh_a"></td>
+            <td id="td_porc_a"></td>
+            <td id="td_prop_a"></td>
+            <td id="td_fijo_a"></td>
+            <td class="monto" id="td_monto_a"></td>
+          </tr>
+          <tr class="row-b">
+            <td class="texto-izq"><span class="dot dot-b"></span>Dpto 2 — Iglesia</td>
+            <td id="td_kwh_b"></td>
+            <td id="td_porc_b"></td>
+            <td id="td_prop_b"></td>
+            <td id="td_fijo_b"></td>
+            <td class="monto" id="td_monto_b"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Barra proporcional -->
+      <div class="barra-visual">
+        <div class="barra-a" id="barra_a"></div>
+        <div class="barra-b" id="barra_b"></div>
+      </div>
+      <div class="barra-legend">
+        <span><span class="dot dot-a"></span>ArqCopy</span>
+        <span><span class="dot dot-b"></span>Iglesia</span>
+      </div>
+
+      <p class="nota">
+        <strong>Metodología:</strong>
+        Los conceptos de <em>Consumo de Energía e IGV sobre consumo</em> se reparten proporcionalmente según los kWh de cada departamento.
+        Los conceptos de <em>Cargo Fijo, Mantenimiento de Conexión, Alumbrado Público, Electrificación Rural e IGV sobre cargos fijos</em> se dividen al 50/50 por no depender del consumo individual.
+        Los <em>Intereses compensatorios y Ajustes de redondeo</em> también se dividen al 50/50 al ser de responsabilidad compartida.
+      </p>
+
+    </section>
+
+    <footer class="footer">
+      Generado para Suministro 1772759 · Luz del Sur S.A.A.
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
