@@ -568,9 +568,12 @@ td {
 /* =============================================
    PRINT — solo header + reporte
    ============================================= */
-/* print-header: oculto en pantalla, visible solo al imprimir */
+/* print-header: siempre en DOM pero invisible en pantalla */
 .print-header {
-  display: none;
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
 }
 
 @media print {
@@ -588,6 +591,8 @@ td {
 
   /* Print header — tres columnas */
   .print-header {
+    position: static;
+    visibility: visible;
     display: flex !important;
     align-items: center;
     gap: 20px;

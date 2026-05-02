@@ -25,10 +25,10 @@ function poblarAnios() {
     if (y === anioActual) opt.selected = true;
     select.appendChild(opt);
   }
+  // Actualizar print_periodo al cambiar selects
   ['mes', 'anio'].forEach(id => {
     document.getElementById(id).addEventListener('change', () => {
-      const p = getPeriodo();
-      document.getElementById('print_periodo').textContent = p || '—';
+      document.getElementById('print_periodo').textContent = getPeriodo() || '—';
     });
   });
 }
