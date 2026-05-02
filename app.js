@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   poblarAnios();
   inicializarInputsNumericos();
   inicializarSubtotalesLive();
+  document.getElementById('print_emision').textContent = getFechaEmision();
 });
 
 // =============================================
@@ -24,6 +25,12 @@ function poblarAnios() {
     if (y === anioActual) opt.selected = true;
     select.appendChild(opt);
   }
+  ['mes', 'anio'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      const p = getPeriodo();
+      document.getElementById('print_periodo').textContent = p || '—';
+    });
+  });
 }
 
 function getPeriodo() {
@@ -366,6 +373,10 @@ function calcular() {
   document.getElementById('chip_prop').textContent  = 'S/ ' + formatValue(totalProp);
   document.getElementById('chip_fijo').textContent  = 'S/ ' + formatValue((totalFijo + totalEsp) / 2);
 
+  // Datos del print-header
+  document.getElementById('print_periodo').textContent = periodo || '—';
+  document.getElementById('print_emision').textContent = getFechaEmision();
+
   // ---- Barra ----
   document.getElementById('barra_a').style.width = (porcA * 100).toFixed(2) + '%';
 
@@ -384,6 +395,17 @@ function calcular() {
  * Centésimos ≥ 0,05 → sube; < 0,05 → baja.
  * Ej: 758,08 → 758,10 | 507,27 → 507,30 | 123,44 → 123,40
  */
+/**
+ * Devuelve la fecha actual formateada como "dd/mm/aaaa".
+ */
+function getFechaEmision() {
+  const hoy = new Date();
+  const d = String(hoy.getDate()).padStart(2, '0');
+  const m = String(hoy.getMonth() + 1).padStart(2, '0');
+  const a = hoy.getFullYear();
+  return `${d}/${m}/${a}`;
+}
+
 function redondear10(valor) {
   return Math.round(valor * 10) / 10;
 }
